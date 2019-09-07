@@ -1,5 +1,6 @@
 import wx
-from Video_test import Video
+#from Video_test import Video
+from Video_file import Video
 
 
 class Frame(wx.Frame):
@@ -29,10 +30,7 @@ class Frame(wx.Frame):
 
         self.CurBmp = wx.Bitmap(0, 0)
 
-        #self.video_inst = Video(r"F:\c_drive_download\Video\JASON DAY PRACTICE ROUND FOOTAGE - GOLF SWING FROM WIN AT 2014 TEMPLETON SYNCED & SLOW MOTION 1080p - YouTube.MP4", 640, 360)
-        self.video_inst = Video()
-        #self.video_inst = Video()
-        #print(self.video_inst.get_last_frame(), self.video_inst.get_frame_rate())
+        self.video_inst = Video(r"C:\Users\qpjg1605\Documents\Python_proj\Auptimo\C2477.MP4")
 
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.update, self.timer)
@@ -50,16 +48,16 @@ class Frame(wx.Frame):
         if self.timer.IsRunning():
             self.timer.Stop()
         else:
-            self.timer.Start(63.00)
+            self.timer.Start(31.00)
 
     def On_Prev_Btn(self, event):
-        self.count -= 1
-        _, self.CurBmp = self.video_inst.goto_frame(self.count)
+        #self.count -= 1
+        _, self.CurBmp = self.video_inst.goto_frame(-1)
         self.Refresh()
 
     def On_Next_Btn(self, event):
         self.count += 1
-        _, self.CurBmp = self.video_inst.goto_frame(self.count, True)
+        _, self.CurBmp = next(self.video_inst.iter_frames())
         self.Refresh()
 
     def On_Text_Enter(self, event):
